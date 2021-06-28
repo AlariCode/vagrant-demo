@@ -1,8 +1,9 @@
 Vagrant.configure("2") do |config|
-	(1..5).each do |i|
+	(1..7).each do |i|
 		config.vm.define "server#{i}" do |web|
 			web.vm.box = "ubuntu/focal64"
 			web.vm.network "forwarded_port", id: "ssh", host: 2222 + i, guest: 22
+			web.vm.network "private_network", ip: "10.11.10.#{i}", virtualbox__intnet: true
 			web.vm.hostname = "server#{i}"
 
 			web.vm.provision "shell" do |s|
